@@ -147,6 +147,19 @@ craiglist.controller("UserController", ['$scope', '$rootScope', 'api_url', '$htt
 		$scope.myproducts = [];
 	});
 
+//For Auction
+$scope.myauction = []
+	$http({
+		url:api_url.url+'auctions',
+		headers: {'Authorization': 'Bearer '+$localStorage.user}
+	}).then(function(response){
+		console.log(response);
+		$scope.myauction = response.data.auctions;
+	},function(error){
+		$scope.myauction = [];
+	});
+
+
 	$scope.addProduct = function(){
 		var params = {"title":$scope.title,"price":$scope.price,"quantity":$scope.quantity,"category":$scope.category,"description":$scope.description};
 		$http({
