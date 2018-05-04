@@ -162,6 +162,7 @@ router.get('/auctions', function(req, res, next){
         return res.json({'auctions': auctions});
     });
 });
+
 router.post('/auctions/add', function(req, res, next) {
     User.findById(req.payload.id).then(function(user){
         if(!user){ return res.sendStatus(401); }
