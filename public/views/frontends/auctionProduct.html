@@ -9,7 +9,7 @@
                 
                 <div class="row banner_bottom_agile_info_inner_w3ls">
                   <div class="clearfix float-my-children" style="background-color:white;margin-bottom: 20px; width:100%" ng-repeat="auction in myauction">
-                    <img src="http://lorempixel.com/400/200/" alt=" " class="img-responsive" style="height: 246px;"/>  
+                    <img src="{{auction.img_name}}" alt=" " class="img-responsive" style="height: 246px;"/>  
                     <div>
                     <h2><span>{{auction.title.substr(0,1)}}</span>{{auction.title.substr(1)}}</h2>
                     <p><span>Max Product : {{auction.maximum_products }}</span></p>

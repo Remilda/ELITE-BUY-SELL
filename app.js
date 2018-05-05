@@ -25,6 +25,7 @@ app.use(bodyParser.json());
 app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/uploads/products'));
+app.use(express.static(__dirname + '/uploads/auctions'));
 
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 app.use(flash());
