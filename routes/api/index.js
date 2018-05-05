@@ -13,6 +13,7 @@ var AuctionProducts = mongoose.model('AuctionProducts');
 router.use('/', require('./users'));
 var config = require('../../config');
 var Auction = mongoose.model('Auction');
+var auth = require('../auth');
 
 router.post('/product', auth.required, function(req, res, next) {
     User.findById(req.payload.id).then(function(user){
@@ -24,8 +25,8 @@ router.post('/product', auth.required, function(req, res, next) {
         product.price = req.body.product.price;
         product.owner = user.toAuthJSON().id;
         product.category = req.body.product.category;
-        product.save().then(function(product) {
-            return res.json({"product": product.toJSON(product.owner, product.category, [])})
+        product.save().then(function(cr_product) {
+            return res.json({"product": cr_product.toJSON(product.owner, product.category, [])})
         }).catch(next);
     }).catch(next);
 });
@@ -163,25 +164,29 @@ router.get('/auctions', function(req, res, next){
     });
 });
 
-router.post('/auctions/add', function(req, res, next) {
+router.post('/auctions/add', auth.required, function(req, res, next) {
     User.findById(req.payload.id).then(function(user){
         if(!user){ return res.sendStatus(401); }
-        var auction = new Auction();
-        auction.title = req.body.title;
-        auction.is_premium = false;
-        auction.maximum_products = req.body.maximum_products;
-        auction.start_date = req.body.start_date;
-        auction.end_date = req.body.end_date;
-        auction.location = req.body.location;
-        auction.owner = user.toAuthJSON().id;
-        auction.save().then(function(created_auction){
-            var ids = [];
-            var pids = req.body.products;
-            for(var id in pids){
-                ids.push({"auction":auction._id, "product":pids[id]});
-            }
-            AuctionProducts.insert(ids);
-            return res.json({"auction":created_auction})
+        var form = new formidable.IncomingForm();
+        var uploadpath = path.join(__dirname, "../../uploads/auctions/");
+        form.parse(req, function (err, fields, files) {
+            var oldpath = files.image.path;
+            var newpath = uploadpath +'auction_'+files.image.name;
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) throw err;
+                var auction = new Auction();
+                auction.title = fields.title;
+                auction.location = fields.address;
+                auction.start_date = fields.start;
+                auction.end_date = fields.end;
+                auction.owner = user.toAuthJSON().id;
+                auction.description = fields.description;
+                auction.img_name = 'auction_'+files.image.name;
+                auction.img_path = newpath;
+                auction.save().then(function(created_auction){
+                    return res.json({"auction":created_auction})
+                });
+            });
         });
     }).catch(next);
 });
