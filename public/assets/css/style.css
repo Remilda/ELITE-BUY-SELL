@@ -2266,6 +2266,14 @@ h3.agileits-icons-title {
     text-align: center;
     word-wrap: break-word;
 }
+.description input[type="text"]{
+    padding: 8px 8px;
+    color: #ccc;
+    font-size: 13px;
+    width: 45%;
+    outline: none;
+    letter-spacing: 1px;
+}
 @media (max-width:1080px){
 	.icon-box {
 		width:33.33%;
@@ -5701,7 +5709,7 @@ p.w3ls_para {
 	background: none;
 	background-image: none;
 	border: 1px solid #a0b3b0;
-	color: #ffffff;
+	color: #bfb3b3;
 	border-radius: 0;
 	transition: border-color .25s ease, box-shadow .25s ease;
   }

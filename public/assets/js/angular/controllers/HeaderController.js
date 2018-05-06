@@ -62,7 +62,7 @@ craiglist.controller("LoginController", ['$scope', '$rootScope', 'api_url', '$ht
 	}
 }]);
 
-craiglist.controller("UserController", ['$scope', '$rootScope', 'api_url', '$http', '$localStorage', '$location','ProductService', '$window', function($scope, $rootScope, api_url, $http, $localStorage, $location, ProductService, $window){
+craiglist.controller("UserController", ['$scope', '$rootScope', 'api_url', '$http', '$localStorage', '$location','ProductService', '$window', '$routeParams', '$filter', function($scope, $rootScope, api_url, $http, $localStorage, $location, ProductService, $window, $routeParams, $filter){
 	$scope.user = [];
 	$scope.basicinfoactive = 'ui-state-default ui-corner-top ui-tabs-active';
 	$scope.activeTab = 'basic';
@@ -162,7 +162,6 @@ craiglist.controller("UserController", ['$scope', '$rootScope', 'api_url', '$htt
 		url:api_url.url+'auctions',
 		headers: {'Authorization': 'Bearer '+$localStorage.user}
 	}).then(function(response){
-		console.log(response);
 		$scope.myauction = response.data.auctions;
 	},function(error){
 		$scope.myauction = [];
@@ -198,24 +197,6 @@ craiglist.controller("UserController", ['$scope', '$rootScope', 'api_url', '$htt
 	    	product_ids.splice(id);
 	        $scope.exampleArray.splice(index, 1);
 	    }
-    }
-
-    $scope.addAuction = function(){
-    	var totl_product = $filter('count')(product_ids);
-    	product_ids = product_ids.filter(function(value, index){ return product_ids.indexOf(value) == index });
-    	alert(totl_product);
-    	console.log(product_ids);
-    	//$scope.product_ids = [];
-    	/*$http({
-    		url:api_url.url+'auctions/add',
-    		method:'POST',
-    		headers: {'Authorization': 'Bearer '+$localStorage.user},
-    		data:{"title":$scope.tile,"maximum_products":totl_product,"start_date":$scope.start,"end_date":,"location":$scope.address, "products": $scope.product_ids}
-    	}).then(function(success){
-
-    	}, function(error){
-
-    	});*/
     }
 }]);
 

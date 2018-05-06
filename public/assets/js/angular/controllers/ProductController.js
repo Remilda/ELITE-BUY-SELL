@@ -56,3 +56,34 @@ craiglist.controller("ProductController", ['$scope', '$rootScope', '$localStorag
 		});
     }
 }]);
+
+craiglist.controller("AuctionController", ['$scope', '$rootScope', '$window', '$routeParams', '$http', 'api_url', function($scope, $rootScope, $window, $routeParams, $http, api_url){
+	$scope.auction = []
+	$http({
+		url:api_url.url+'auction/'+$routeParams.id
+	}).then(function(response){
+		$scope.auction = response.data.auction;
+	},function(error){
+		$scope.auction = [];
+		alert("Looks like something went wrong");
+		console.log(error);
+		$window.location.href = "/";
+	});
+	$scope.descactive = "resp-tab-active";
+	$scope.otheractive = "";
+	$scope.desctabselected = true;
+	$scope.infotabselected = false;
+	$scope.curtab = "description";
+	$scope.showTab = function(tab) {
+		if(tab == "description"){
+			$scope.descactive = "resp-tab-active";
+			$scope.otheractive = "";
+			$scope.curtab = "description";
+		}
+		if(tab == "information"){
+			$scope.descactive = "";
+			$scope.otheractive = "resp-tab-active";
+			$scope.curtab = "information";
+		}
+	}
+}]);

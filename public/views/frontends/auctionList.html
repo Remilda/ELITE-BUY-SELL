@@ -5,51 +5,23 @@
             <div class="grid images_3_of_2">
                 <div class="flexslider">
                     <div class="clearfix"></div>
-                    <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                        <div class="slides_controls">
-                            <div>
-                              <carousel interval="myInterval">
-                                <slide ng-repeat="slide in product.images" active="slide.active">
-                                  <img ng-src="{{slide.path}}">
-                                </slide>
-                              </carousel>
-                            </div>
-                        </div>
+                    <div class="flex-viewport">
+                      <img ng-src="/{{auction.img_name}}" style="width: 100%;">
                     </div>
                 </div>
             </div>
         </div>
-        
         <div class="col-md-8 single-right-left simpleCart_shelfItem">
-            <h3 ng-bind="product.title"></h3>
-            <p><span class="item_price" ng-bind="(product.price | currency:$)"></span></p>
-            <ul class="social-nav model-3d-0 footer-social w3_agile_social single_page_w3ls">
-                <li class="share">Share On : </li>
-                <li>
-                    <a href="#" class="facebook">
-                        <div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="twitter">
-                        <div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="instagram">
-                        <div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="pinterest">
-                        <div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
-                        <div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
-                    </a>
-                </li>
-            </ul>
+            <h3 ng-bind="auction.title"></h3>
+            <p><span class="item_price" ng-bind="(auction.min_price | currency:$)"></span></p>
+            <p><i class="fa fa-map-marker"></i><span ng-bind="auction.location"></span></p>
+            <div class="description">
+                <h5>Place your bids</h5>
+                <form action="#" method="post">
+                <input type="email" value="Enter email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter email';}" required="">
+                <button class="btn btn-default image-preview-clear">Place Bid</button>
+                </form>
+            </div>
         </div>
         <div class="clearfix"> </div>
         <div class="responsive_tabs_agileits">
@@ -61,19 +33,19 @@
                 <div class="resp-tabs-container">
                     <div class="tab1 resp-tab-content" ng-show="curtab=='description'">
                         <div class="single_page_agile_its_w3ls">
-                            <p class="w3ls_para" ng-bind="product.description"></p>
+                            <p class="w3ls_para" ng-bind="auction.description"></p>
                         </div>
                     </div>
                     <div class="tab2 resp-tab-content" ng-show="curtab=='information'">
                         <div class="single_page_agile_its_w3ls">
                             <div class="bootstrap-tab-text-gridss">
                                 <div class="bootstrap-tab-text-grid-left">
-                                    <img src="/assets/images/atomix_user31.png" alt=" " class="img-responsive">
+                                    <img src="{{auction.owner.image}}" alt=" " class="img-responsive">
                                 </div>
                                 <div class="bootstrap-tab-text-grid-right">
                                     <p class="w3ls_para">
-                                        <span>Uploaded By : {{product.owner.name}}</span><br>
-                                        <span>Category : {{product.category.title}}</span><br>
+                                        <span>Owner Name : {{auction.owner.name}}</span><br>
+                                        <span>Owner Email : {{auction.owner.email}}</span><br>
                                         <span ng-bind="avail"></span>
                                     </p>
                                 </div>
@@ -87,33 +59,8 @@
 
         <!-- More from User-->
         <div class="w3_agile_latest_arrivals" ng-show="(similar_by_user | count) > 0">
-            <h4 class="wthree_text_info">More <span>From User</span></h4>
+            <h4 class="wthree_text_info">More <span>Biddinng</span></h4>
             <div class="col-md-3 product-men single" ng-repeat="each in similar_by_user">
-                <div class="men-pro-item simpleCart_shelfItem">
-                    <div class="men-thumb-item">
-                        <img src="{{product.images[0].path}}" alt="{{each.title}}" class="pro-image-front">
-                        <img src="{{product.images[1].path}}" alt="{{each.title}}" class="pro-image-back">
-                        <div class="men-cart-pro">
-                            <div class="inner-men-cart-pro">
-                                <a href="/product/{{each._id}}" class="link-product-add-cart">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item-info-product ">
-                        <h4><a href="single.html">{{each.title}}</a></h4>
-                        <div class="info-product-price">
-                            <span class="item_price" ng-bind="(each.price | currency:$)"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-
-        <!-- More from Category-->
-        <div class="w3_agile_latest_arrivals" ng-show="(similar_by_category | count) > 0">
-            <h4 class="wthree_text_info">More <span>From Category</span></h4>
-            <div class="col-md-3 product-men single" ng-repeat="each in similar_by_category">
                 <div class="men-pro-item simpleCart_shelfItem">
                     <div class="men-thumb-item">
                         <img src="{{product.images[0].path}}" alt="{{each.title}}" class="pro-image-front">

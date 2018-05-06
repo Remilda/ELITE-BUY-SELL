@@ -19,5 +19,31 @@ var AuctionSchema = new mongoose.Schema({
 	img_path: {type:String}
 }, {timestamps: true});
 
+AuctionSchema.methods.toJSON = function(user, category, images){
+	var fullname = '';
+	if(typeof user.firstname != 'undefined'){
+		fullname += user.firstname;
+	}
+	if(typeof user.lastname != 'undefined'){
+		fullname = fullname+" "+user.lastname;
+	}
+	return {
+		_id: this._id,
+		title: this.title,
+		location: this.location,
+		start_date: this.start_date,
+		end_date: this.end_date,
+		owner:{
+			name: fullname,
+			email: user.email,
+			image:user.image,
+			_id:user._id
+		},
+		minimum_price: this.minimum_price,
+		description: this.description,
+		is_sold:this.is_sold,
+		img_name:this.img_name
+	};
+};
 
 mongoose.model('Auction', AuctionSchema);

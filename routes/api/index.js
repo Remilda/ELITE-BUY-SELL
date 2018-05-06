@@ -176,7 +176,7 @@ router.get('/category/:name/products', function(req, res, next){
 
 
 router.get('/auctions', function(req, res, next){
-	Auction.find({}, function(err, auctions) {
+	Auction.find({}).sort({'createdAt':-1}).exec(function(err, auctions) {
         return res.json({'auctions': auctions});
     });
 });
@@ -198,6 +198,7 @@ router.post('/auctions/add', auth.required, function(req, res, next) {
                 auction.end_date = fields.end;
                 auction.owner = user.toAuthJSON().id;
                 auction.description = fields.description;
+                auction.minimum_price = fields.min_price;
                 auction.img_name = 'auction_'+files.image.name;
                 auction.img_path = newpath;
                 auction.save().then(function(created_auction){
@@ -206,6 +207,12 @@ router.post('/auctions/add', auth.required, function(req, res, next) {
             });
         });
     }).catch(next);
+});
+
+router.get('/auction/:id', function(req, res, next) {
+    Auction.findById(req.params.id).populate('owner').exec(function(err, auction) {
+        return res.json({"auction": auction.toJSON(auction.owner)});
+    });
 });
 
 router.use(function(err, req, res, next){
