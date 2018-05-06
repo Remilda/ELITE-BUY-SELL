@@ -31,7 +31,10 @@ craiglist.config(function($routeProvider, $locationProvider) {
     }).when('/auctionProduct',{
         templateUrl: '/public/views/frontends/auctionProduct.html',
         controller: 'UserController'
-    }).otherwise({
+    }).when('/auction/:id',{
+        templateUrl: '/public/views/frontends/auctionList.html',
+        controller: 'UserController' 
+}).otherwise({
         redirectTo: '/'
     });
     $locationProvider.html5Mode({

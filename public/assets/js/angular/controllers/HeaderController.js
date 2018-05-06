@@ -140,6 +140,7 @@ craiglist.controller("UserController", ['$scope', '$rootScope', 'api_url', '$htt
 		url:api_url.url+'/user/products',
 		headers: {'Authorization': 'Bearer '+$localStorage.user}
 	}).then(function(response){
+		console.log(response);
 		$scope.myproducts = response.data.products;
 	},function(error){
 		$scope.myproducts = [];
@@ -151,6 +152,7 @@ $scope.myauction = []
 		url:api_url.url+'auctions',
 		headers: {'Authorization': 'Bearer '+$localStorage.user}
 	}).then(function(response){
+		console.log(response);
 		$scope.myauction = response.data.auctions;
 	},function(error){
 		$scope.myauction = [];
