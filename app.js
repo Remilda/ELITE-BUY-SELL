@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/assets/images'));
 app.use(express.static(__dirname + '/uploads/products'));
 app.use(express.static(__dirname + '/uploads/auctions'));
 
@@ -59,6 +60,7 @@ require('./models/Category');
 require('./models/Product');
 require('./models/ProductImages');
 require('./models/AuctionProducts');
+require('./models/Bids');
 require('./config/passport');
 
 app.use(require('./routes'));

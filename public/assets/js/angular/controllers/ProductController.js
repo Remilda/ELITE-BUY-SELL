@@ -69,6 +69,14 @@ craiglist.controller("AuctionController", ['$scope', '$rootScope', '$window', '$
 		console.log(error);
 		$window.location.href = "/";
 	});
+	$scope.bids = []
+	$http({
+		url:api_url.url+'auction/'+$routeParams.id+'/bids'
+	}).then(function(response){
+		$scope.bids = response.data.bids;
+	},function(error){
+		$scope.auction = [];
+	});
 	$scope.descactive = "resp-tab-active";
 	$scope.otheractive = "";
 	$scope.desctabselected = true;

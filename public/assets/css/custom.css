@@ -141,3 +141,13 @@ h1 {
     padding: 0;
   }
 }
+.bid_icon{
+  display: block;
+  max-width: 50%;
+  height: auto;
+}
+span.date{
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+}

@@ -13,6 +13,7 @@ var AuctionProducts = mongoose.model('AuctionProducts');
 router.use('/', require('./users'));
 var config = require('../../config');
 var Auction = mongoose.model('Auction');
+var Bids = mongoose.model('Bids');
 var auth = require('../auth');
 
 router.post('/product', auth.required, function(req, res, next) {
@@ -213,6 +214,22 @@ router.get('/auction/:id', function(req, res, next) {
     Auction.findById(req.params.id).populate('owner').exec(function(err, auction) {
         return res.json({"auction": auction.toJSON(auction.owner)});
     });
+});
+
+router.get('/auction/:id/bids', function(req, res, next) {
+    Bids.find({auction:req.params.id}).exec(function(err, bids) {
+        return res.json({"bids": bids});
+    });
+});
+
+router.post('/auction/bid', function(req, res, next){
+    var bid = new Bids();
+    bid.email = req.body.email;
+    bid.auction = req.body.auction;
+    bid.bid_amount = req.body.bid_amount;
+    bid.save().then(function(bids){
+        return res.json({"bid":bids});
+    }).catch(next);
 });
 
 router.use(function(err, req, res, next){
