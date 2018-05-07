@@ -94,4 +94,19 @@ craiglist.controller("AuctionController", ['$scope', '$rootScope', '$window', '$
 			$scope.curtab = "information";
 		}
 	}
+
+	$scope.addBid = function(){
+		$http({
+			url:api_url.url+'auction/bid',
+			method:'POST',
+			data: {'auction':$routeParams.id, 'email':$scope.email, 'bid_amount':$scope.amount}
+		}).then(function(response){
+			alert('Successfulyy bidded for this auction');
+			$scope.bids.push(response.data.bid);
+		}, function(error){
+			alert("Something went wrong, try after sometime");
+			console.log(error);
+			$window.location.href = "/";
+		});
+	}
 }]);

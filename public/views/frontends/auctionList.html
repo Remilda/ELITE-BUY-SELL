@@ -17,9 +17,10 @@
             <p><i class="fa fa-map-marker"></i><span ng-bind="auction.location"></span></p>
             <div class="description">
                 <h5>Place your bids</h5>
-                <form action="#" method="post">
-                <input type="email" value="Enter email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter email';}" required="">
-                <button class="btn btn-default image-preview-clear">Place Bid</button>
+                <form ng-submit="addBid()">
+                    <input type="email" placeholder="Enter email" ng-model="email" required>
+                    <input type="text" value="Enter email" ng-model="amount" required>
+                    <button class="btn btn-default image-preview-clear" type="ng-submit">Place Bid</button>
                 </form>
             </div>
         </div>
